@@ -3,7 +3,7 @@
 #include "QSplitter"
 #include "QPushButton"
 #include "QFileDialog"
-#include <iostream><
+#include <iostream>
 
 
 ImageWindows::ImageWindows(QWidget *parent) :

@@ -11,6 +11,8 @@
 #include <QImage>
 
 #include "qlabel_image.h"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 
 ////Page principale de l'application
 /// Permet d'acceder a tous les traitements
@@ -52,10 +54,14 @@ private slots:
 
 
 
+    void on_pushButton_clicked();
+
 signals:
     void SelectImage();
 
 private:
+    QImage * imcurrent = NULL;
+    cv::Mat mat_current;
     Ui::MainWindow *ui;
     QImage *image_courante;
     std::vector<QImage> images;

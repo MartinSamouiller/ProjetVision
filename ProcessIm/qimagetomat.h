@@ -16,7 +16,7 @@ public:
     QImageToMat();
     ~QImageToMat();
 
-   inline QImage cvMatToQImage( const cv::Mat &inMat )
+   static inline QImage cvMatToQImage( const cv::Mat &inMat )
    {
       switch ( inMat.type() )
       {
@@ -63,12 +63,12 @@ public:
       return QImage();
    }
 
-   inline QPixmap cvMatToQPixmap( const cv::Mat &inMat )
+   static inline QPixmap cvMatToQPixmap( const cv::Mat &inMat )
    {
       return QPixmap::fromImage( cvMatToQImage( inMat ) );
    }
 
-   inline cv::Mat QImageToCvMat( const QImage &inImage, bool inCloneImageData = true )
+   static inline cv::Mat QImageToCvMat( const QImage &inImage, bool inCloneImageData = true )
       {
          switch ( inImage.format() )
          {
@@ -110,7 +110,7 @@ public:
       // If inPixmap exists for the lifetime of the resulting cv::Mat, pass false to inCloneImageData to share inPixmap's data
       // with the cv::Mat directly
       //    NOTE: Format_RGB888 is an exception since we need to use a local QImage and thus must clone the data regardless
-   inline cv::Mat QPixmapToCvMat( const QPixmap &inPixmap, bool inCloneImageData = true )
+   static inline cv::Mat QPixmapToCvMat( const QPixmap &inPixmap, bool inCloneImageData = true )
    {
      return QImageToCvMat( inPixmap.toImage(), inCloneImageData );
    }

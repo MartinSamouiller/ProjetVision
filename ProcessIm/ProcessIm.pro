@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     imagewindows.cpp \
     qlabel_image.cpp \
     histogramme.cpp \
-    qimagetomat.cpp
+    qimagetomat.cpp \
+    traitement.cpp
 
 HEADERS  += mainwindow.h \
     infowindows.h \
     imagewindows.h \
     histogramme.h \
     qlabel_image.h \
-    qimagetomat.h
+    qimagetomat.h \
+    traitement.h
 
 FORMS    += mainwindow.ui \
     infowindows.ui \

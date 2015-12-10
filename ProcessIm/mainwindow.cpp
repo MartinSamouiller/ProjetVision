@@ -2,15 +2,19 @@
 #include "ui_mainwindow.h"
 
 #include <QFileSystemModel>
-#include "QSplitter"
-#include "QMdiArea"
-#include "QMdiSubWindow"
-#include "QDesktopWidget"
+#include <QSplitter>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QDesktopWidget>
+#include <QMessageBox>
 
 
 #include "histogramme.h"
 #include "imagewindows.h"
 #include "infowindows.h"
+#include "qimagetomat.h"
+#include "traitement.h"
+
 
 
 
@@ -199,14 +203,16 @@ void MainWindow::on_actionOuvrir_triggered()
 {
     //Add Image
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString());
-    QImage *im_tmp = new QImage(fichier);
+    imcurrent = new QImage(fichier);
+    mat_current = QImageToMat::QImageToCvMat(*imcurrent, false);
+
 
     imageLbl->setScaledContents(true);
 
-    imageLbl->setFixedWidth(im_tmp->width());
-    imageLbl->setFixedHeight(im_tmp->height());
+    imageLbl->setFixedWidth(imcurrent->width());
+    imageLbl->setFixedHeight(imcurrent->height());
 
-    imageLbl->setPixmap(QPixmap::fromImage(*im_tmp));
+    imageLbl->setPixmap(QPixmap::fromImage(*imcurrent));
     ui->scrollArea->setWidget(imageLbl);
 
 
@@ -229,3 +235,38 @@ void MainWindow::on_checkBox_Histogramme_clicked()
         ui->scrollArea_Histogramme->setHidden(true);
 
 }
+
+
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    traitement tr;
+
+    if(ui->radioButton_Forme->isChecked()){
+        tr.traitementForme(mat_current);
+    }
+    else if (ui->radioButton_Comptage->isChecked())
+    {
+        tr.traitementComptage(mat_current);
+    }
+    else if (ui->radioButton_CouleurChoix->isChecked())
+    {
+        tr.traitementCouleurChoix(mat_current);
+    }
+    else if(ui->radioButton_CouleurDetection->isChecked())
+    {
+        tr.traitementCouleurDetection(mat_current);
+    }
+    else if(ui->radioButton_Findobjet->isChecked())
+    {
+        tr.traitementFindObjet(mat_current);
+    }
+    else
+    {
+        //QMessageBox::warning(this, tr("Traitement"), tr("Selectionner un mode ! "),  QMessageBox::Cancel, QMessageBox::Ok);
+    }
+
+}
+
+
