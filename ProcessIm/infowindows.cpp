@@ -7,9 +7,9 @@ InfoWindows::InfoWindows(QWidget *parent) :
     ui(new Ui::InfoWindows)
 {
     ui->setupUi(this);
-    QString path = QApplication::applicationDirPath () + "/Image/im0002.jpg" ;
-    QImage image(path);
-    ui->label->setPixmap(QPixmap::fromImage(image));
+    //QString path = QApplication::applicationDirPath () + "/Image/im0002.jpg" ;
+    //QImage image(path);
+   //ui->label->setPixmap(QPixmap::fromImage(image));
 }
 
 InfoWindows::~InfoWindows()

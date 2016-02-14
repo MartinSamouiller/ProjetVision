@@ -3,6 +3,7 @@
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core.hpp"
 
 #include <QMainWindow>
 #include <QApplication>
@@ -29,9 +30,15 @@ public:
     cv::Mat traitementCouleurDetection(cv::Mat _matIn);
     //Recherche d'objet
     cv::Mat traitementFindObjet(cv::Mat _matIn);
+    cv::Mat Overlay(cv::Mat _matIn);
+
 
  private:
-    void comptageObject(cv::Mat _matIn );
+    int comptageObject(cv::Mat _matIn );
+    cv::Mat seuillageColor(cv::Mat _matIn, cv::Mat &_matThresh);
+    int nbObjet(cv::Mat _matIn);
+    //cv::Mat traitementCouleurDetectionThread(cv::Mat _matIn);
+
 };
 
 #endif // TRAITEMENT_H

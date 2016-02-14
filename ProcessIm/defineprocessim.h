@@ -1,0 +1,18 @@
+#ifndef DEFINEPROCESSIM
+#define DEFINEPROCESSIM
+
+//Different mode de traitement
+enum E_TYPE_TRAITEMENT {
+
+    DETECTION_FORME,
+    DETECTION_COULEUR,
+    CHOIX_COULEUR,
+    COMPTAGE_OBJET,
+    RETROUVER_OBJET,
+
+};
+
+
+
+#endif // DEFINEPROCESSIM
+
