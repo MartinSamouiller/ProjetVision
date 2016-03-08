@@ -14,6 +14,46 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="0">
+    <layout class="QVBoxLayout" name="layoutCouleurs">
+     <item>
+      <widget class="CouleursChoix" name="w_C1" native="true"/>
+     </item>
+     <item>
+      <widget class="CouleursChoix" name="w_C2" native="true"/>
+     </item>
+     <item>
+      <widget class="CouleursChoix" name="w_C3" native="true"/>
+     </item>
+     <item>
+      <widget class="CouleursChoix" name="w_C4" native="true"/>
+     </item>
+     <item>
+      <widget class="CouleursChoix" name="w_C5" native="true"/>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Nombre Couleurs</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>5</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="maximumSize">
@@ -36,42 +76,31 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <layout class="QVBoxLayout" name="layoutCouleurs">
-     <item>
-      <widget class="CouleursChoix" name="w_C1" native="true"/>
-     </item>
-     <item>
-      <widget class="CouleursChoix" name="w_C2" native="true"/>
-     </item>
-     <item>
-      <widget class="CouleursChoix" name="w_C3" native="true"/>
-     </item>
-     <item>
-      <widget class="CouleursChoix" name="w_C4" native="true"/>
-     </item>
-     <item>
-      <widget class="CouleursChoix" name="w_C5" native="true"/>
-     </item>
-    </layout>
-   </item>
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Nombre Couleurs</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBox">
-       <property name="maximum">
-        <number>5</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

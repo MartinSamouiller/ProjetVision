@@ -156,7 +156,7 @@ void ImageWindows::Mouse_current_pos()
 
 void ImageWindows::Mouse_pressed()
 {
-
+    //ui->
 }
 
 void ImageWindows::MouseClickLeft()

@@ -26,9 +26,20 @@ public:
     void SetTypeTraitement(E_TYPE_TRAITEMENT type);
     void clearLayout(QLayout* layout, bool deleteWidgets = true);
     void removeAllWidgets();
+    E_TYPE_TRAITEMENT getTypeTraitement() {return _eTypeTraitement; };
+    QString getTypeTraitementString();
+
+    ComptageObjet *getComptageObjet(){return  compt; };
+    ChoixCouleur * getChoixCouleur() {return couleur ; };
+    DetectionCouleurs *getDetectionCouleur() {return detectioncou ;};
+    RetrouverObjet *getRetrouverObjet(){ return retrouveobj; } ;
+    DetectionForme *getDetectionForme() {return formedete;} ;
 
 private slots:
     void on_btn_LancerProcess_clicked();
+
+signals:
+    void demarerTraitements();
 
 private:
     Ui::ParametrageTraitement *ui;

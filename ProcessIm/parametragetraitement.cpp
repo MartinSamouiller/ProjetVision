@@ -23,6 +23,32 @@ ParametrageTraitement::~ParametrageTraitement()
     delete ui;
 }
 
+QString ParametrageTraitement::getTypeTraitementString()
+{
+
+      switch (_eTypeTraitement)
+      {
+         case COMPTAGE_OBJET:
+            return QString("COMPTAGE OBJETS");
+            break;
+         case CHOIX_COULEUR:
+            return QString("CHOIX COULEUR");
+            break;
+         case DETECTION_COULEUR:
+             return QString("DETECTION COULEURS");
+             break;
+         case RETROUVER_OBJET:
+             return QString("RETROUVER OBJET");
+             break;
+         case DETECTION_FORME:
+             return QString("DETECTION FORME");
+             break;
+         default:
+            return QString("NULL");
+             break;
+      }
+
+}
 
 void ParametrageTraitement::SetTypeTraitement(E_TYPE_TRAITEMENT type){
     _eTypeTraitement = type;
@@ -90,7 +116,7 @@ void ParametrageTraitement::SetTypeTraitement(E_TYPE_TRAITEMENT type){
 //Demarrage du traitement
 void ParametrageTraitement::on_btn_LancerProcess_clicked()
 {
-
+    emit demarerTraitements();
 }
 
 void ParametrageTraitement::clearLayout(QLayout* layout, bool deleteWidgets)

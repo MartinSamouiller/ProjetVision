@@ -35,6 +35,13 @@ void CouleursChoix::getRGBIntervalle(int& R, int& B, int& G, int& intervalle){
     intervalle = ui->spinBox_Interval->value();
 }
 
+void CouleursChoix::getRGBIntervalle(QColor& color, int& intervalle){
+
+    intervalle = ui->spinBox_Interval->value();
+    color = QColor(_color);
+}
+
+
 void CouleursChoix::slotColor(QColor color){
 
     ui->spinBox_R->setValue(color.red());
@@ -44,6 +51,22 @@ void CouleursChoix::slotColor(QColor color){
     QPalette palette;
     palette.setColor(QPalette::Button, color);
     ui->pushButton->setPalette(palette);
+
+    _color = color;
    // qDebug() << "color change";
    // qDebug() << "R : " << QString::number(color.red()) << " G : "  << QString::number(color.green()) << " B " <<  QString::number(color.blue());
 }
+
+void CouleursChoix::setTitle(QString title){
+    ui->lbl_title->setText(title);
+}
+
+/*
+void CouleursChoix::disableAllWidget(){
+
+    ui->spinBox_R->
+    ui->spinBox_B->setValue(color.blue());
+    ui->spinBox_G->setValue(color.green());
+
+
+}*/

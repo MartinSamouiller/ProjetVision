@@ -1,6 +1,8 @@
 #ifndef DEFINEPROCESSIM
 #define DEFINEPROCESSIM
 
+#include <QColor>
+
 //Different mode de traitement
 enum E_TYPE_TRAITEMENT {
 
@@ -12,7 +14,14 @@ enum E_TYPE_TRAITEMENT {
 
 };
 
+struct S_INFOS_OBJETS {
+  int label;
+  float area; //aire
+  float radius; //rayon
+  QRgb  color;
+  QPointF center;
 
+} ;
 
 #endif // DEFINEPROCESSIM
 

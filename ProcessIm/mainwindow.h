@@ -22,6 +22,7 @@
 #include "bgapi2_featurenames.h"
 
 #include "parametragetraitement.h"
+#include "resultats.h"
 
 ////Page principale de l'application
 /// Permet d'acceder a tous les traitements
@@ -41,10 +42,22 @@ public:
     explicit MainWindow(QWidget *parent = 0);
 
     ~MainWindow();
-    QImage * getImageSimulation();
+    //QImage * getImageSimulation();
     int  InitCameraBauhmer();
     int  Snap();
     void createMsgError(QString message);
+    void resultatsTermine();
+    void demarrageTraiComptage();
+    void demarrageTraiCouleurChoix();
+    void demarrageTraiCouleurDetection();
+    void demarrageTraiFindObjet();
+    void demarrageTraiForme();
+    void affichageResComptage();
+    void affichageResCouleurChoix();
+    void affichageResCouleurDetection();
+    void affichageResFindObjet();
+    void affichageResTraiForme();
+    void displayImageRes(cv::Mat matDisplay);
 
 private slots:
     //void on_actionOuvrir_une_image_triggered();
@@ -57,15 +70,8 @@ private slots:
     void Mouse_pressed();
     void MouseClickLeft();
     void Mouse_release_pos();
-   // void on_cbTraitement_currentIndexChanged(const QString &arg1);
-   // void on_cbAnalyse_currentIndexChanged(const QString &arg1);
-   // void on_actionHistogramme_triggered();
     void on_actionOuvrir_triggered();
-
     void on_checkBox_Histogramme_clicked();
-    //void on_pushButton_clicked();
-    int on_pushButton_Live_clicked();
-    void on_pushButton_LiveStop_clicked();
     void on_pushButton_Snap_clicked();
     void on_pushButton_Connection_clicked();
     void on_bout_calibrage_clicked();
@@ -75,6 +81,11 @@ private slots:
     void slotInitCameraError();
     void slotRadioButtonMode(bool checked);
     void on_btn_ParametrageMode_clicked();
+    void on_pushButton_Save_clicked();
+    void on_pushButton_Detection_clicked();
+    void slotDemarerTraitement();
+    void slotTraitementFinish();
+
 
 signals:
     void SelectImage();
@@ -82,13 +93,22 @@ signals:
     void ErrorInitCamera();
 
 private:
+
+    double _dim_x_pix = 100; // mettre taille en x en pixel
+    double _dim_y_pix = 100; // mettre taille en y en pixel
+    double _pos_x_pix = 50; // Mettre coord en x en pixel
+    double _pos_y_pix = 100; // Mettre coord en y en pixel
+
     QImage * imcurrent = NULL;
     cv::Mat mat_current;
+    cv::Mat mat_label; //image de label (objet entre 0 et n)
+    qlabel_image *imageLbl;
+
     Ui::MainWindow *ui;
-    QImage *image_courante;
+    QImage im_Acqui;
     std::vector<QImage> images;
     int m_index_image = 0;
-    qlabel_image *imageLbl;
+
 
     traitement _Traitement;
     //QBoxLayout *Layout_Travail;
@@ -120,6 +140,11 @@ private:
 
     //Fenetre de parametra!ge des traitement
     ParametrageTraitement *param;
+    Resultats *res;
+
+    QFuture<void> t1;
+
+    bool _bdisplayRescomptage = false;
 
 
 };

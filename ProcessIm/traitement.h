@@ -14,30 +14,50 @@
 #include <QBoxLayout>
 #include <QImage>
 
+#include "defineprocessim.h"
 
-class traitement
+class traitement : public QWidget
 {
+    Q_OBJECT
+
 public:
-    traitement();
+    explicit traitement(QWidget *parent = 0);
+    //traitement();
     ~traitement();
     //Classification par forme
-    cv::Mat traitementForme(cv::Mat _matIn);
+    void traitementForme(cv::Mat& _matIn);
     //Comptage d'objets dans l'image
-    cv::Mat traitementComptage(cv::Mat _matIn);
+    void traitementComptage(cv::Mat& _matIn, bool b_hsv, int threshold, int sizemorpho);
     //Classification par couleur
-    cv::Mat traitementCouleurChoix(cv::Mat _matIn);
+    void traitementCouleurChoix(cv::Mat& _matIn);
     //Recherche des objets ayant une couleur paramétrée
-    cv::Mat traitementCouleurDetection(cv::Mat _matIn);
+    void traitementCouleurDetection(cv::Mat &_matIn);
     //Recherche d'objet
-    cv::Mat traitementFindObjet(cv::Mat _matIn);
-    cv::Mat Overlay(cv::Mat _matIn);
+    void traitementFindObjet(cv::Mat& _matIn);
 
+    //Recupération du nombre d'objets
+    void getResultatComptage(int& nbrObjet){nbrObjet = nbre_objets;}
+    std::vector<S_INFOS_OBJETS> getResultatComptage(){return infos_comptage; }
+
+    inline cv::Mat getMatCurrent(){return _mat_current;}
+    inline cv::Mat getMatLabel(){return _mat_label;}
 
  private:
-    int comptageObject(cv::Mat _matIn );
-    cv::Mat seuillageColor(cv::Mat _matIn, cv::Mat &_matThresh);
+    int comptageObject(cv::Mat _matIn);
+    cv::Mat seuillageColor(cv::Mat _matIn, cv::Mat &_matThresh, bool b_hsv, int threshold = -1, int sizemorpho = 7);
     int nbObjet(cv::Mat _matIn);
     //cv::Mat traitementCouleurDetectionThread(cv::Mat _matIn);
+
+signals:
+    void traitementFinished();
+    void traitementComptageFinished(int nbr_objet); //renvoi le nombre d'objets detectés
+
+private:
+    int nbre_objets = 0; //Permet de notifier le résultat du comptage d'objet.
+    std::vector<S_INFOS_OBJETS> infos_comptage;
+
+    cv::Mat _mat_current;
+    cv::Mat _mat_label;
 
 };
 

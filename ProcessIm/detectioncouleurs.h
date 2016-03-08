@@ -15,6 +15,9 @@ public:
     explicit DetectionCouleurs(QWidget *parent = 0);
     ~DetectionCouleurs();
 
+private slots:
+    void on_spinBox_valueChanged(int arg1);
+
 private:
     Ui::DetectionCouleurs *ui;
 };

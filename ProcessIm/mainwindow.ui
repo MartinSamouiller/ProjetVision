@@ -35,7 +35,7 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_9">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <widget class="QWidget" name="widget" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -66,134 +66,13 @@
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_6" native="true">
+            <widget class="QWidget" name="widget_7" native="true">
              <property name="maximumSize">
               <size>
-               <width>16777215</width>
+               <width>300</width>
                <height>16777215</height>
               </size>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Paramètre de la caméra</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>Format du pixel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="pixel_format">
-                <item>
-                 <property name="text">
-                  <string>BayerRG8</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>BayerRG12</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Mono8</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>Activation du HDR</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="HDR">
-                <item>
-                 <property name="text">
-                  <string>false</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>true</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Gain (en dB)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="box_gain">
-                <property name="maximum">
-                 <number>10000000</number>
-                </property>
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>Temps d'exposition (micro sec)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="box_expo">
-                <property name="maximum">
-                 <number>10000000</number>
-                </property>
-                <property name="value">
-                 <number>285000</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="reset_reg">
-                <property name="text">
-                 <string>Reset</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="apply_reg">
-                <property name="text">
-                 <string>Appliquer </string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QWidget" name="widget_7" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
                <widget class="QLabel" name="label">
@@ -340,7 +219,7 @@
           <attribute name="title">
            <string>Traitements</string>
           </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
            <item>
             <widget class="QSplitter" name="splitter">
              <property name="orientation">
@@ -355,11 +234,14 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>307</width>
+                 <width>99</width>
                  <height>631</height>
                 </rect>
                </property>
               </widget>
+             </widget>
+             <widget class="QWidget" name="horizontalLayoutWidget">
+              <layout class="QHBoxLayout" name="layout_res"/>
              </widget>
              <widget class="QWidget" name="widget_2" native="true">
               <property name="maximumSize">
@@ -437,14 +319,60 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_nbObjet">
+                   <spacer name="verticalSpacer_6">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_XY">
                     <property name="text">
                      <string/>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_XY">
+                   <spacer name="verticalSpacer_7">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_Label">
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_8">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_nbObjet">
                     <property name="text">
                      <string/>
                     </property>
@@ -484,7 +412,7 @@
                     <x>0</x>
                     <y>0</y>
                     <width>480</width>
-                    <height>107</height>
+                    <height>69</height>
                    </rect>
                   </property>
                  </widget>
@@ -510,13 +438,23 @@
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QWidget" name="widget_8" native="true">
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QGraphicsView" name="graphicsView_Live"/>
-              </item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
                <widget class="QWidget" name="widget_9" native="true">
                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_Snap">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>SNAP</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item>
                   <spacer name="verticalSpacer_5">
                    <property name="orientation">
@@ -531,43 +469,152 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_Live">
-                   <property name="text">
-                    <string>Live</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_LiveStop">
-                   <property name="text">
-                    <string>Live Stop</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_Snap">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>50</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Snap</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pushButton_2">
+                  <widget class="QPushButton" name="pushButton_Save">
                    <property name="text">
                     <string>Sauvegarder</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_3">
+                  <widget class="QPushButton" name="pushButton_Detection">
                    <property name="text">
                     <string>Detection</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGraphicsView" name="graphicsView_Live"/>
+              </item>
+              <item>
+               <widget class="QWidget" name="widget_6" native="true">
+                <property name="maximumSize">
+                 <size>
+                  <width>400</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <item>
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>Paramètre de la caméra</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>Format du pixel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="pixel_format">
+                   <item>
+                    <property name="text">
+                     <string>BayerRG8</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>BayerRG12</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Mono8</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>Activation du HDR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="HDR">
+                   <item>
+                    <property name="text">
+                     <string>false</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>true</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>Gain (en dB)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="box_gain">
+                   <property name="maximum">
+                    <number>10000000</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Temps d'exposition (micro sec)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="box_expo">
+                   <property name="maximum">
+                    <number>10000000</number>
+                   </property>
+                   <property name="value">
+                    <number>285000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="reset_reg">
+                   <property name="maximumSize">
+                    <size>
+                     <width>1999999</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Reset</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="apply_reg">
+                   <property name="text">
+                    <string>Appliquer </string>
                    </property>
                   </widget>
                  </item>
@@ -631,6 +678,48 @@
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>ETAT DU TRAITEMENT EN COURS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_LED_EtatTraite">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
          </property>
          <property name="text">
           <string/>

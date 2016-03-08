@@ -28,11 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //this->setLayout(ui->Layout_Travail);
-
-    /*InfoWindows *info = new InfoWindows();
-    info -> setWindowModality (Qt::ApplicationModal);
-    info->show();*/
 
     showNormal();
 
@@ -56,41 +51,30 @@ MainWindow::MainWindow(QWidget *parent) :
     imageLbl->setMouseTracking(true);
 
     ui->pushButton_LEDConnection->setStyleSheet("background-color: red");
+    ui->pushButton_LED_EtatTraite->setStyleSheet("background-color: red");
 
     //Creation de la fenetre de traitement
     param = new ParametrageTraitement();
+    //Fenetre de résultats des traitements
+    res = new Resultats();
+    QObject::connect(param,SIGNAL(demarerTraitements()),this,SLOT(slotDemarerTraitement()));
 
+    //permet de detecter quand le traitement et fini
+    QObject::connect(&_Traitement,SIGNAL(traitementFinished()),this,SLOT(slotTraitementFinish()));
+
+    //Met a jour le mode par défaut
+    ui->radioButton_CouleurDetection->setChecked(true);
+    slotRadioButtonMode(true);
+
+    //On cache les deux options
+    ui->radioButton_Forme->hide();
+    ui->radioButton_Findobjet->hide();
 }
 
 MainWindow::~MainWindow()
 {
-    //message
     delete ui;
 }
-/*
-void MainWindow::on_actionOuvrir_une_image_triggered()
-{
-    m_index_image += 1;
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.bmp)");
-    QFileInfo file(fichier);
-
-
-    QImage *im_tmp = new QImage(fichier);
-
-    QString name_image = file.fileName();
-
-
-    ImageWindows *ImWin = new ImageWindows(*im_tmp,name_image );
-    QMdiSubWindow *subWindow1 = new QMdiSubWindow;
-    subWindow1->setWidget(ImWin);
-    subWindow1->setAttribute(Qt::WA_DeleteOnClose);
-    ui->mdiArea_Simulation->addSubWindow(subWindow1);
-    subWindow1->show();
-
-}*/
-
-
-
 
 void MainWindow::on_actionQuitter_triggered()
 {
@@ -120,7 +104,7 @@ void MainWindow::on_actionDossier_de_travail_triggered()
 
 
 //recupére l'image de
-QImage * MainWindow::getImageSimulation(){
+/*QImage * MainWindow::getImageSimulation(){
 
     if(ui->scrollArea->widget() != NULL)
         return NULL;
@@ -130,7 +114,7 @@ QImage * MainWindow::getImageSimulation(){
     QImage img = pixelMap->toImage();
 
     return &img;
-}
+}*/
 
 void MainWindow::Mouse_current_pos()
 {
@@ -148,6 +132,19 @@ void MainWindow::Mouse_current_pos()
                                         .arg(qGreen(rgb))
                                         .arg(qBlue(rgb)));
 
+    }
+
+    int nbr_objet_max;
+    _Traitement.getResultatComptage(nbr_objet_max);
+    if(_bdisplayRescomptage){
+        if(res ){
+            int value = mat_label.at<int>(imageLbl->y,imageLbl->x) ;
+            if(value != 0){
+                res->setSelectRowTab(nbr_objet_max - value);//changement de la ligne du tableau résultat en fonction du label
+                ui->label_Label->setText(QString("Label objet %1").arg(value));
+            }
+
+        }
     }
 }
 
@@ -177,12 +174,12 @@ void MainWindow::on_actionOuvrir_triggered()
 
 
     imageLbl->setScaledContents(true);
-
     imageLbl->setFixedWidth(imcurrent->width());
     imageLbl->setFixedHeight(imcurrent->height());
-
     imageLbl->setPixmap(QPixmap::fromImage(*imcurrent));
     ui->scrollArea->setWidget(imageLbl);
+
+    ui->tab_Menu->setCurrentWidget(ui->tab_Simulation);
 
 
 }
@@ -195,10 +192,12 @@ void MainWindow::on_checkBox_Histogramme_clicked()
 
     //On active l'histogramme si on veut qu'il s'affiche
     if(ui->checkBox_Histogramme->isChecked()){
-        QImage *img = getImageSimulation();
-        Histogramme *histo = new Histogramme(img);
+        //QImage *img = getImageSimulation();
+        Histogramme *histo = new Histogramme(imcurrent);
         ui->scrollArea_Histogramme->setWidget(histo);
+        ui->scrollArea_Histogramme->resize(histo->size());
         ui->scrollArea_Histogramme->setHidden(false);
+        qDebug() << "Display histogramme";
 
     }else
         ui->scrollArea_Histogramme->setHidden(true);
@@ -211,47 +210,11 @@ void MainWindow::on_checkBox_Histogramme_clicked()
 void MainWindow::on_pushButton_clicked()
 {
 
-    if(ui->radioButton_Forme->isChecked()){
-
-        QFuture<cv::Mat> t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementForme, mat_current);
-        //t1.waitForFinished();
-    }
-    else if (ui->radioButton_Comptage->isChecked())
-    {
-
-        QFuture<cv::Mat> t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementComptage, mat_current);
-        //t1.waitForFinished();
-    }
-    else if (ui->radioButton_CouleurChoix->isChecked())
-    {
-        QFuture<cv::Mat> t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementCouleurChoix, mat_current);
-        //t1.waitForFinished();
-    }
-    else if(ui->radioButton_CouleurDetection->isChecked())
-    {
-        QFuture<cv::Mat> t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementCouleurDetection, mat_current);
-        //t1.waitForFinished();
-
-    }
-    else if(ui->radioButton_Findobjet->isChecked())
-    {
-        QFuture<cv::Mat> t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementFindObjet, mat_current);
-        //t1.waitForFinished();
-
-    }
-    else
-    {
-        //QMessageBox::warning(this, tr("Traitement"), tr("Selectionner un mode ! "),  QMessageBox::Cancel, QMessageBox::Ok);
-    }
 
 }
 */
 
-int MainWindow::on_pushButton_Live_clicked()
-{
-    return 0;
-}
-
+/*
 void MainWindow::on_pushButton_LiveStop_clicked()
 {
    pDevice->GetRemoteNode("AcquisitionStop")->Execute();
@@ -272,7 +235,7 @@ void MainWindow::on_pushButton_LiveStop_clicked()
    BGAPI2::SystemList::ReleaseInstance();
 
    std::cout << "Input any number to close the program:";
-}
+}*/
 
 void MainWindow::on_pushButton_Snap_clicked()
 {
@@ -474,11 +437,11 @@ int MainWindow::Snap(){
 
             BGAPI2::Image* imageTransform =  imgProcessor->CreateTransformedImage(image, "RGB8Packed");
 
-            QImage img((uchar*)imageTransform->GetBuffer(), pBufferFilled->GetWidth() ,pBufferFilled->GetHeight(), QImage::Format_RGB888);
+            im_Acqui = QImage((uchar*)imageTransform->GetBuffer(), pBufferFilled->GetWidth() ,pBufferFilled->GetHeight(), QImage::Format_RGB888);
             //QPixmap imgAff;
 
             QPixmap imgAff;
-            imgAff = QPixmap::fromImage(img);
+            imgAff = QPixmap::fromImage(im_Acqui);
 
             //ui->lbl_live->setPixmap(imgAff);
            QGraphicsScene* scene = new QGraphicsScene();
@@ -514,11 +477,10 @@ void MainWindow::on_bout_calibrage_clicked()
     // Etape 1 acquérir une image
     // Etape 2 Calculer la taille de l'objet (en x et y)
     // Etape 3 Caluler les coord en (en x et y) pour le robot
-
-    double dim_x_pix = 100; // mettre taille en x en pixel
-    double dim_y_pix = 100; // mettre taille en y en pixel
-    double pos_x_pix = 50; // Mettre coord en x en pixel
-    double pos_y_pix = 100; // Mettre coord en y en pixel
+    _dim_x_pix = 100; // mettre taille en x en pixel
+    _dim_y_pix = 100; // mettre taille en y en pixel
+    _pos_x_pix = 50; // Mettre coord en x en pixel
+    _pos_y_pix = 100; // Mettre coord en y en pixel
 
     //Récupération des valeurs de l'interface
     double taille_image_l_pix = ui->box_im_l_pix->value();
@@ -531,10 +493,10 @@ void MainWindow::on_bout_calibrage_clicked()
     double convy = taille_image_l_mm/taille_image_l_pix;
 
     //Valeurs en mm
-    double dim_x_mm = dim_x_pix * convx;
-    double dim_y_mm = dim_y_pix * convy;
-    double pos_x_mm = pos_x_pix * convx;
-    double pos_y_mm = pos_y_pix * convy;
+    double dim_x_mm = _dim_x_pix * convx;
+    double dim_y_mm = _dim_y_pix * convy;
+    double pos_x_mm = _pos_x_pix * convx;
+    double pos_y_mm = _pos_y_pix * convy;
 
     //Affichage
     ui->box_obj_x->setValue(dim_x_mm);
@@ -582,6 +544,7 @@ void MainWindow::createMsgError(QString message){
 void MainWindow::on_btn_ParametrageMode_clicked()
 {
     param->show();
+    qApp->setActiveWindow(param);
 }
 
 
@@ -599,4 +562,222 @@ void MainWindow::slotRadioButtonMode(bool checked){
         param->SetTypeTraitement(DETECTION_FORME);
 
     qDebug() << "Clicked radio button";
+    qApp->setActiveWindow(param);
 }
+
+
+
+void MainWindow::on_pushButton_Save_clicked()
+{
+    if(!im_Acqui.isNull()){
+
+        QString fichier = QFileDialog::getSaveFileName(this, "Sauvegarder une image", QString());
+        im_Acqui.save(fichier);
+        qDebug() << "Image sauvegardée";
+    }
+
+}
+
+void MainWindow::on_pushButton_Detection_clicked()
+{
+    if(imcurrent != NULL)
+        delete imcurrent;
+
+    imcurrent = new QImage(im_Acqui);
+    mat_current = QImageToMat::QImageToCvMat(*imcurrent, false);
+
+    imageLbl->setScaledContents(true);
+    imageLbl->setFixedWidth(imcurrent->width());
+    imageLbl->setFixedHeight(imcurrent->height());
+
+    imageLbl->setPixmap(QPixmap::fromImage(*imcurrent));
+    ui->scrollArea->setWidget(imageLbl);
+
+    ui->tab_Menu->setCurrentWidget(ui->tab_Simulation);
+
+}
+
+
+
+///Permet de lancer les traitements dans des thread séparés
+void MainWindow::slotDemarerTraitement(){
+
+    //En mode comptage on va afficher une selection sur les resultats en fonction de l'image de label
+    //on ne veut pas que ce mode soit actif pour les autres traitements
+    _bdisplayRescomptage = false;
+
+    qDebug() << "Lancer traitement : ";
+    ui->pushButton_LED_EtatTraite->setStyleSheet("background-color: red");
+    E_TYPE_TRAITEMENT typeTraitement =  param->getTypeTraitement();
+    qDebug() << param->getTypeTraitementString();
+
+    switch (typeTraitement)
+    {
+       case COMPTAGE_OBJET:
+          demarrageTraiComptage();
+          break;
+       case CHOIX_COULEUR:
+          demarrageTraiCouleurChoix();
+          break;
+       case DETECTION_COULEUR:
+           demarrageTraiCouleurDetection();
+           break;
+       case RETROUVER_OBJET:
+           demarrageTraiFindObjet();
+           break;
+       case DETECTION_FORME:
+           demarrageTraiForme();
+           break;
+       default:
+          QMessageBox::warning(this, tr("Traitement"), tr("Selectionner un mode ! "),  QMessageBox::Cancel, QMessageBox::Ok);
+          break;
+    }
+
+}
+///Lancement du traitement de comptage d'objet en fonction des paramétres récupérés dans l'IHM
+void MainWindow::demarrageTraiComptage(){
+
+    bool hsv = param->getComptageObjet()->getHSV();
+    int threshold = param->getComptageObjet()->getThreshold();
+    int sizemorpho = param->getComptageObjet()->getSizeMorpho();
+
+    t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementComptage, mat_current, hsv, threshold, sizemorpho);
+
+}
+
+void MainWindow::demarrageTraiCouleurChoix(){
+    t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementCouleurChoix, mat_current);
+
+}
+
+void MainWindow::demarrageTraiCouleurDetection(){
+
+    t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementCouleurDetection, mat_current);
+}
+
+void MainWindow::demarrageTraiFindObjet(){
+
+    t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementFindObjet, mat_current);
+
+}
+
+void MainWindow::demarrageTraiForme(){
+
+    t1 = QtConcurrent::run(&this->_Traitement, &traitement::traitementForme, mat_current);
+
+}
+
+///Affiche les résultats en sortie du traitement
+void MainWindow::affichageResComptage(){
+
+
+
+    int nbre_objets = -1;
+    _Traitement.getResultatComptage(nbre_objets);
+
+    QString _msgInfp;
+    _msgInfp.append("Nombre d'objets détéctés : ");
+    _msgInfp.append(QString::number(nbre_objets));
+    ui->layout_res->addWidget(res);
+    res->setInfos(_msgInfp);
+    res->setInfosComptageObjet(_Traitement.getResultatComptage());
+
+    cv::Mat mat_display  = _Traitement.getMatCurrent(); //Recupere l'image traitée
+
+    mat_label =  _Traitement.getMatLabel();
+    _bdisplayRescomptage = true;
+
+    displayImageRes(mat_display); //Affichage de l'image en sortie du traitement
+  //  qApp->setActiveWindow(this); //Mets la fenetre de résultat en avant plan
+}
+
+
+void MainWindow::displayImageRes(cv::Mat matDisplay){
+
+    QImage im = QImageToMat::cvMatToQImage(matDisplay);
+    imageLbl->setScaledContents(true);
+    imageLbl->setFixedWidth(im.width());
+    imageLbl->setFixedHeight(im.height());
+    imageLbl->setPixmap(QPixmap::fromImage(im));
+    ui->scrollArea->repaint();
+    ui->scrollArea->update();
+
+}
+
+
+void MainWindow::affichageResCouleurChoix(){
+
+
+}
+
+void MainWindow::affichageResCouleurDetection(){
+
+}
+
+void MainWindow::affichageResFindObjet(){
+
+
+}
+
+void MainWindow::affichageResTraiForme(){
+
+
+
+}
+
+
+
+
+
+void MainWindow::slotTraitementFinish()
+{
+    qDebug() << "Traitement fini";
+    ui->pushButton_LED_EtatTraite->setStyleSheet("background-color: green");
+    ui->pushButton_LED_EtatTraite->repaint();
+    ui->pushButton_LED_EtatTraite->update();
+
+    this->repaint();
+    this->update();
+    qApp->setActiveWindow(this);
+    qDebug() << "End slot finish traitement";
+
+    resultatsTermine();
+
+
+
+}
+
+
+void MainWindow::resultatsTermine(){
+    res->show();
+    res->setTitleUi(param->getTypeTraitementString());
+
+
+    E_TYPE_TRAITEMENT typeTraitement =  param->getTypeTraitement();
+    qDebug() << param->getTypeTraitementString();
+
+    switch (typeTraitement)
+    {
+       case COMPTAGE_OBJET:
+          affichageResComptage();
+          break;
+       case CHOIX_COULEUR:
+          affichageResCouleurChoix();
+          break;
+       case DETECTION_COULEUR:
+           affichageResCouleurDetection();
+           break;
+       case RETROUVER_OBJET:
+           affichageResFindObjet();
+           break;
+       case DETECTION_FORME:
+           affichageResTraiForme();
+           break;
+       default:
+          QMessageBox::warning(this, tr("Traitement"), tr("Selectionner un mode ! "),  QMessageBox::Cancel, QMessageBox::Ok);
+          break;
+    }
+
+}
+
+
